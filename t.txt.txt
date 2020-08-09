@@ -1,0 +1,18 @@
+int main()
+begin
+	int n1,n2,n3;
+	if(a>b)
+	begin
+		printf(n1);
+	end
+	if(1<=2)
+	begin
+		printf(n2);
+	end
+	if(a==b)
+	begin
+		printf(n3);
+	end
+end
+
+

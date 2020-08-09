@@ -1,0 +1,23 @@
+%{
+#include "y.tab.h"
+#include <stdio.h>
+int k=0,i=0,nl=0,oper=0;
+%}
+%%
+"int" {printf("%s is a keyword\n",yytext);k++;return INT;}
+"main" {return MAIN;}
+"begin" {printf("%s is a keyword\n",yytext);k++;return BG;}
+"end" {printf("%s is a keyword\n",yytext);k++;return END;}
+"if" {printf("%s is a keyword\n",yytext);k++;return IF;}
+"printf" {printf("%s is a keyword\n",yytext);k++;return PF;}
+"()" {return EMPPAR;}
+[nN][123] {printf("%s is an identifier\n",yytext);i++;return VAR;}
+[a-zA-Z0-9]+ {printf("%s is an identifier\n",yytext);i++;return EXPR;}
+[ ] {return SP;}
+[ \t]+
+[\n] {nl++;return NL;}
+[;] {return SC;}
+[,] {return CM;}
+">"|"<"|">="|"<="|"=="|"!=" {printf("%s is an operator\n",yytext);oper++;return RELOP;}
+. {return yytext[0];}
+%%

@@ -1,0 +1,43 @@
+%{
+#include<stdio.h>
+#include<stdlib.h>
+extern int k,i,nl,oper;
+extern int yylex();
+extern int *yyin;
+extern int *yyout;
+%}
+%token INT MAIN BG END IF PF EMPPAR VAR EXPR SP CM SC NL RELOP
+%%
+stmt: INT SP MAIN void NL code NL {printf("----------------------------\n");
+				   printf("VALID!!!\n");
+				   printf("Total number of keywords = %d\n",k);
+				   printf("Total number of identifiers = %d\n",i);
+				   printf("Total number of operators = %d\n",oper);
+				   printf("Total number of lines = %d\n",nl);
+				   printf("----------------------------\n");
+				   exit(0);};
+void: SP EMPPAR | EMPPAR;
+code: BG NL declare NL loops END;
+declare: INT SP var_list SC;
+var_list: VAR list;
+list: SP CM SP VAR list | CM SP VAR list | SP CM VAR list | CM VAR list | ;
+loops: loops if_stmt | if_stmt;
+if_stmt: IF '(' condition ')' NL BG NL PF '(' VAR ')' SC NL END NL;
+condition: EXPR RELOP EXPR;
+%%
+int yyerror(char *msg)
+{
+printf("Invalid\n");
+exit(0);
+}
+int main(int argc,char *argv[])
+{
+if(argc!=2)
+{
+printf("Enter in the format ./a.out f1.txt\n");
+exit(0);
+}
+yyin=fopen(argv[1],"r");
+yyparse();
+return 0;
+}
